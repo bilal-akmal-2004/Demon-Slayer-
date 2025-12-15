@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demon Slayer Character Gallery</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      :root {
+        --primary: #c72c41;
+        --secondary: #2a1b3d;
+        --accent: #f8c630;
+        --light: #f5f5f5;
+        --dark: #1a1a2e;
+        --shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      body {
+        background-color: var(--dark);
+        color: var(--light);
+        overflow-x: hidden;
+        background-image: radial-gradient(
+            circle at 10% 20%,
+            rgba(199, 44, 65, 0.15) 0%,
+            transparent 20%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(42, 27, 61, 0.15) 0%,
+            transparent 20%
+          );
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          var(--secondary) 0%,
+          var(--dark) 100%
+        );
+        padding: 2rem 1rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        animation: headerSlideIn 1s ease-out;
+      }
+
+      @keyframes headerSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=1926&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.2;
+        z-index: 0;
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--accent);
+        text-shadow: 3px 3px 0 var(--primary);
+        letter-spacing: 2px;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        color: #ddd;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      /* Filter buttons for desktop */
+      .filter-buttons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 3rem;
+        animation: fadeIn 1s ease-out 0.5s both;
+      }
+
+      .filter-btn {
+        background-color: var(--secondary);
+        color: var(--light);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        opacity: 0;
+        animation: slideUp 0.5s ease-out forwards;
+      }
+
+      .filter-btn:nth-child(1) {
+        animation-delay: 0.6s;
+      }
+      .filter-btn:nth-child(2) {
+        animation-delay: 0.7s;
+      }
+      .filter-btn:nth-child(3) {
+        animation-delay: 0.8s;
+      }
+      .filter-btn:nth-child(4) {
+        animation-delay: 0.9s;
+      }
+      .filter-btn:nth-child(5) {
+        animation-delay: 1s;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .filter-btn:hover {
+        background-color: var(--primary);
+        transform: translateY(-3px);
+      }
+
+      .filter-btn.active {
+        background-color: var(--primary);
+        box-shadow: 0 5px 15px rgba(199, 44, 65, 0.4);
+      }
+
+      /* Mobile filter menu */
+      .mobile-filter-toggle {
+        display: none;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 0 auto 2rem;
+        align-items: center;
+        gap: 0.8rem;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        animation: slideUp 0.5s ease-out 0.6s both;
+      }
+
+      .mobile-filter-toggle:hover {
+        background-color: var(--accent);
+        color: var(--dark);
+        transform: translateY(-3px);
+      }
+
+      .mobile-filter-menu {
+        display: none;
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+        animation: slideDown 0.4s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .mobile-filter-btn {
+        background-color: var(--secondary);
+        color: var(--light);
+        border: none;
+        padding: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        width: 100%;
+      }
+
+      .mobile-filter-btn:hover {
+        background-color: rgba(199, 44, 65, 0.3);
+      }
+
+      .mobile-filter-btn.active {
+        background-color: var(--primary);
+        box-shadow: 0 3px 10px rgba(199, 44, 65, 0.4);
+      }
+
+      .character-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2.5rem;
+        perspective: 1000px;
+      }
+
+      .character-card {
+        background: linear-gradient(145deg, var(--secondary) 0%, #1f1630 100%);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: all 0.4s ease;
+        cursor: pointer;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: rotateY(0deg);
+        opacity: 0;
+      }
+
+      /* Entrance animation for character cards */
+      .character-card.animate-in {
+        animation: cardEntrance 0.8s ease-out forwards;
+      }
+
+      @keyframes cardEntrance {
+        0% {
+          opacity: 0;
+          transform: translateX(-50px) rotateY(15deg);
+        }
+        70% {
+          opacity: 0.8;
+          transform: translateX(10px) rotateY(-5deg);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0) rotateY(0deg);
+        }
+      }
+
+      /* Alternative animation for right side entrance */
+      .character-card.animate-in-right {
+        animation: cardEntranceRight 0.8s ease-out forwards;
+      }
+
+      @keyframes cardEntranceRight {
+        0% {
+          opacity: 0;
+          transform: translateX(50px) rotateY(-15deg);
+        }
+        70% {
+          opacity: 0.8;
+          transform: translateX(-10px) rotateY(5deg);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0) rotateY(0deg);
+        }
+      }
+
+      .character-card:hover {
+        transform: translateY(-10px) rotateY(5deg);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .character-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+      }
+
+      .character-img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-bottom: 3px solid var(--primary);
+        background-color: #2a1b3d;
+        display: flex;
+        justify-content: center;
+        color: #555;
+        font-size: 1rem;
+        overflow: hidden;
+      }
+
+      .character-img img {
+        transition: transform 0.5s ease;
+      }
+
+      .character-card:hover .character-img img {
+        transform: scale(1.05);
+      }
+
+      .character-info {
+        padding: 1.5rem;
+      }
+
+      .character-info h3 {
+        color: var(--accent);
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .character-info .role {
+        color: var(--primary);
+        font-weight: bold;
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .character-info .breathing-style {
+        background-color: rgba(199, 44, 65, 0.1);
+        padding: 0.5rem;
+        border-radius: 5px;
+        margin-top: 0.8rem;
+        font-size: 0.9rem;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.4s ease 0.1s;
+      }
+
+      .character-card:hover .breathing-style {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Modal Styles - FIXED */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 1rem;
+      }
+
+      .modal-content {
+        background: linear-gradient(
+          135deg,
+          var(--secondary) 0%,
+          var(--dark) 100%
+        );
+        max-width: 900px;
+        margin: 2rem auto;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        position: relative;
+        animation: modalAppear 0.5s ease;
+      }
+
+      @keyframes modalAppear {
+        from {
+          opacity: 0;
+          transform: translateY(-50px) scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: var(--primary);
+        color: white;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        cursor: pointer;
+        z-index: 1001; /* Increased z-index */
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      }
+
+      .close-modal:hover {
+        background-color: var(--accent);
+        color: var(--dark);
+        transform: rotate(90deg) scale(1.1);
+        border-color: var(--primary);
+      }
+
+      .modal-body {
+        display: flex;
+        flex-direction: column;
+      }
+
+      @media (min-width: 768px) {
+        .modal-body {
+          flex-direction: row;
+        }
+      }
+
+      .modal-img {
+        flex: 1;
+        min-height: 400px;
+        background-color: #2a1b3d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #555;
+        font-size: 1rem;
+        overflow: hidden;
+      }
+
+      .modal-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: zoomIn 0.8s ease-out;
+      }
+
+      @keyframes zoomIn {
+        from {
+          opacity: 0;
+          transform: scale(1.1);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .modal-info {
+        flex: 1.5;
+        padding: 2rem;
+      }
+
+      .modal-info h2 {
+        color: var(--accent);
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 3px solid var(--primary);
+        padding-bottom: 0.5rem;
+        animation: slideInLeft 0.6s ease-out;
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .modal-info .role {
+        color: var(--primary);
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        animation: slideInLeft 0.6s ease-out 0.1s both;
+      }
+
+      .info-section {
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+      }
+
+      .info-section:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .info-section:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      .info-section:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      .info-section:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .info-section h3 {
+        color: var(--accent);
+        margin-bottom: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .info-section p {
+        line-height: 1.7;
+        color: #ddd;
+      }
+
+      .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .skill-tag {
+        background-color: rgba(199, 44, 65, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        border: 1px solid rgba(199, 44, 65, 0.5);
+        opacity: 0;
+        transform: scale(0.8);
+        animation: popIn 0.4s ease-out forwards;
+      }
+
+      .skill-tag:nth-child(1) {
+        animation-delay: 0.5s;
+      }
+      .skill-tag:nth-child(2) {
+        animation-delay: 0.55s;
+      }
+      .skill-tag:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+      .skill-tag:nth-child(4) {
+        animation-delay: 0.65s;
+      }
+      .skill-tag:nth-child(5) {
+        animation-delay: 0.7s;
+      }
+      .skill-tag:nth-child(6) {
+        animation-delay: 0.75s;
+      }
+
+      @keyframes popIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background-color: var(--secondary);
+        margin-top: 4rem;
+        border-top: 3px solid var(--primary);
+        animation: fadeIn 1s ease-out 1.5s both;
+      }
+
+      .logo {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--accent);
+        margin-bottom: 1rem;
+        display: inline-block;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 992px) {
+        h1 {
+          font-size: 2.8rem;
+        }
+
+        .character-grid {
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 2rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        .subtitle {
+          font-size: 1.1rem;
+          padding: 0 1rem;
+        }
+
+        .character-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 1.5rem;
+        }
+
+        .modal-content {
+          margin: 1rem auto;
+        }
+
+        .modal-info {
+          padding: 1.5rem;
+        }
+
+        .modal-info h2 {
+          font-size: 2rem;
+        }
+
+        /* Show mobile filter button, hide desktop buttons */
+        .mobile-filter-toggle {
+          display: flex;
+        }
+
+        .filter-buttons {
+          display: none;
+        }
+
+        .close-modal {
+          top: 10px;
+          right: 10px;
+          width: 40px;
+          height: 40px;
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .character-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .mobile-filter-menu {
+          gap: 0.6rem;
+        }
+
+        .mobile-filter-btn {
+          padding: 0.9rem;
+          font-size: 0.95rem;
+        }
+
+        .container {
+          padding: 1.5rem;
+        }
+
+        .close-modal {
+          top: 8px;
+          right: 8px;
+          width: 36px;
+          height: 36px;
+          font-size: 1.3rem;
+        }
+      }
+
+      /* Character status indicator */
+      .status {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 5px;
+      }
+
+      .status.alive {
+        background-color: #4caf50;
+      }
+
+      .status.deceased {
+        background-color: #f44336;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1><i class="fas fa-fire"></i> DEMON SLAYER GALLERY</h1>
+        <p class="subtitle">
+          Explore all your favorite characters from Kimetsu no Yaiba. Click on
+          any character to view their skills, breathing styles, and detailed
+          information.
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Mobile filter toggle button -->
+      <button class="mobile-filter-toggle" id="mobileFilterToggle">
+        <i class="fas fa-filter"></i> Filter Characters
+        <i class="fas fa-chevron-down" id="filterIcon"></i>
+      </button>
+
+      <!-- Mobile filter menu (hidden by default) -->
+      <div class="mobile-filter-menu" id="mobileFilterMenu">
+        <button class="mobile-filter-btn active" data-filter="all">
+          <i class="fas fa-users"></i> All Characters
+        </button>
+        <button class="mobile-filter-btn" data-filter="hashira">
+          <i class="fas fa-crown"></i> Hashiras
+        </button>
+        <button class="mobile-filter-btn" data-filter="kamado">
+          <i class="fas fa-fire"></i> Kamado Family
+        </button>
+        <button class="mobile-filter-btn" data-filter="demon">
+          <i class="fas fa-moon"></i> Demons
+        </button>
+        <button class="mobile-filter-btn" data-filter="slayer">
+          <i class="fas fa-crosshairs"></i> Other Slayers
+        </button>
+      </div>
+
+      <!-- Desktop filter buttons -->
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">
+          <i class="fas fa-users"></i> All Characters
+        </button>
+        <button class="filter-btn" data-filter="hashira">
+          <i class="fas fa-crown"></i> Hashiras
+        </button>
+        <button class="filter-btn" data-filter="kamado">
+          <i class="fas fa-fire"></i> Kamado Family
+        </button>
+        <button class="filter-btn" data-filter="demon">
+          <i class="fas fa-moon"></i> Demons
+        </button>
+        <button class="filter-btn" data-filter="slayer">
+          <i class="fas fa-crosshairs"></i> Other Slayers
+        </button>
+      </div>
+
+      <div class="character-grid" id="characterGrid">
+        <!-- Character cards will be generated by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Modal for character details - FIXED CLOSE BUTTON -->
+    <div class="modal" id="characterModal">
+      <div class="modal-content">
+        <div class="close-modal" id="closeModal">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="modal-body">
+          <div class="modal-img" id="modalImg">
+            <!-- Character image will be inserted here -->
+          </div>
+          <div class="modal-info">
+            <h2 id="modalName">Character Name</h2>
+            <div class="role" id="modalRole">
+              <!-- Character role will be inserted here -->
+            </div>
+
+            <div class="info-section">
+              <h3><i class="fas fa-info-circle"></i> About</h3>
+              <p id="modalAbout">Character description will appear here.</p>
+            </div>
+
+            <div class="info-section">
+              <h3><i class="fas fa-wind"></i> Breathing Style</h3>
+              <p id="modalBreathing">
+                Breathing style information will appear here.
+              </p>
+            </div>
+
+            <div class="info-section">
+              <h3><i class="fas fa-bolt"></i> Skills & Techniques</h3>
+              <div class="skills-list" id="modalSkills">
+                <!-- Skills will be inserted here -->
+              </div>
+            </div>
+
+            <div class="info-section">
+              <h3><i class="fas fa-history"></i> Status</h3>
+              <p id="modalStatus">Character status will appear here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="logo">DEMON SLAYER GALLERY</div>
+      <p>
+        Created with HTML, CSS, and JavaScript • All Demon Slayer content is
+        property of Koyoharu Gotouge / Shueisha
+      </p>
+    </footer>
+
+    <script>
+      // Character data
+      const characters = [
+        {
+          id: 1,
+          name: "Tanjiro Kamado",
+          role: "Demon Slayer • Water Hashira (Later)",
+          breathing: "Water Breathing, Sun Breathing (Hinokami Kagura)",
+          about:
+            "A kind-hearted boy who became a Demon Slayer after his family was slaughtered by a demon, and his sister Nezuko turned into a demon. He seeks to find a cure for his sister.",
+          skills: [
+            "Water Surface Slash",
+            "Water Wheel",
+            "Flowing Dance",
+            "Striking Tide",
+            "Blessed Rain After the Drought",
+            "Hinokami Kagura",
+          ],
+          status: "Alive",
+          category: "kamado",
+          image: "tanjiro_kamado.jpg",
+        },
+        {
+          id: 2,
+          name: "Nezuko Kamado",
+          role: "Demon • Protector",
+          breathing: "None (Demon Abilities)",
+          about:
+            "Tanjiro's younger sister who was turned into a demon but retains her human emotions. She fights alongside her brother to protect humans from demons.",
+          skills: [
+            "Blood Demon Art: Exploding Blood",
+            "Size Manipulation",
+            "Pyrokinesis",
+            "Enhanced Strength",
+            "Regeneration",
+          ],
+          status: "Alive (Demon)",
+          category: "kamado",
+          image: "nezuko_kamado.jpg",
+        },
+        {
+          id: 3,
+          name: "Zenitsu Agatsuma",
+          role: "Demon Slayer • Thunder Hashira (Later)",
+          breathing: "Thunder Breathing",
+          about:
+            "A cowardly and anxious boy who becomes incredibly powerful when unconscious. He masters Thunder Breathing and becomes a Hashira.",
+          skills: [
+            "Thunderclap and Flash",
+            "Sixfold",
+            "Eightfold",
+            "God Speed",
+            "Thunder Breathing First Form",
+          ],
+          status: "Alive",
+          category: "slayer",
+          image: "zenitsu_agatsuma.jpg",
+        },
+        {
+          id: 4,
+          name: "Inosuke Hashibira",
+          role: "Demon Slayer • Beast Hashira (Later)",
+          breathing: "Beast Breathing",
+          about:
+            "A wild and aggressive boy raised by boars. He wears a boar's head mask and uses his unique Beast Breathing style with two serrated swords.",
+          skills: [
+            "Fang Rush",
+            "Wild Strike",
+            "Savage Claw",
+            "Spatial Awareness",
+            "Temporary Concentration",
+          ],
+          status: "Alive",
+          category: "slayer",
+          image: "inosuke_hashibira.jpg",
+        },
+        {
+          id: 5,
+          name: "Giyu Tomioka",
+          role: "Water Hashira",
+          breathing: "Water Breathing",
+          about:
+            "The Water Hashira who first encountered Tanjiro and Nezuko. He is calm, reserved, and one of the most powerful Hashira.",
+          skills: [
+            "Water Surface Slash",
+            "Water Wheel",
+            "Flowing Dance",
+            "Striking Tide",
+            "Dead Calm",
+            "Eleventh Form: Dead Calm",
+          ],
+          status: "Alive",
+          category: "hashira",
+          image: "giyu_tomioka.jpg",
+        },
+        {
+          id: 6,
+          name: "Kyojuro Rengoku",
+          role: "Flame Hashira",
+          breathing: "Flame Breathing",
+          about:
+            "The passionate and enthusiastic Flame Hashira with a strong sense of justice. He died protecting others from Upper Moon Three.",
+          skills: [
+            "Unknowing Fire",
+            "Rising Scorching Sun",
+            "Flame Tiger",
+            "Purgatory",
+            "Ninth Form: Rengoku",
+          ],
+          status: "Deceased",
+          category: "hashira",
+          image: "kyojuro_rengoku.jpg",
+        },
+        {
+          id: 7,
+          name: "Shinobu Kocho",
+          role: "Insect Hashira",
+          breathing: "Insect Breathing",
+          about:
+            "The Insect Hashira who uses poison instead of physical strength to kill demons. She appears cheerful but carries deep pain from her past.",
+          skills: [
+            "Butterfly Dance: Caprice",
+            "Dance of the Bee Sting: True Flutter",
+            "Dance of the Dragonfly: Compound Eye Hexagon",
+            "Dance of the Centipede: Hundred-Legged Zigzag",
+          ],
+          status: "Deceased",
+          category: "hashira",
+          image: "shinobu_kocho.jpg",
+        },
+        {
+          id: 8,
+          name: "Tengen Uzui",
+          role: "Sound Hashira",
+          breathing: "Sound Breathing",
+          about:
+            "The flamboyant Sound Hashira and former ninja. He uses two large cleavers and has enhanced hearing abilities.",
+          skills: [
+            "First Form: Roar",
+            "Second Form: Ringing Bell Clamor",
+            "Fourth Form: Constant Resounding Slashes",
+            "Fifth Form: String Performance",
+          ],
+          status: "Alive (Retired)",
+          category: "hashira",
+          image: "tengen_uzui.jpg",
+        },
+        {
+          id: 9,
+          name: "Muzan Kibutsuji",
+          role: "Demon King • Progenitor",
+          breathing: "None (Demon Abilities)",
+          about:
+            "The first demon and progenitor of all other demons. He seeks immortality and to walk in the sunlight.",
+          skills: [
+            "Shape-shifting",
+            "Biological Absorption",
+            "Blood Demon Art",
+            "Creation of Demons",
+            "Multiple Hearts and Brains",
+          ],
+          status: "Deceased",
+          category: "demon",
+          image: "muzan_kibutsuji.jpg",
+        },
+        {
+          id: 10,
+          name: "Kanao Tsuyuri",
+          role: "Demon Slayer • Flower Hashira (Later)",
+          breathing: "Flower Breathing",
+          about:
+            "Shinobu Kocho's adoptive sister who was saved by the Kocho sisters. She becomes a skilled Demon Slayer and later a Hashira.",
+          skills: [
+            "Final Form: Equinoctial Vermilion Eye",
+            "Second Form: Honorable Shadow Plum",
+            "Dance of Camellia",
+            "Fifth Form: Peonies of Futility",
+          ],
+          status: "Alive",
+          category: "slayer",
+          image: "kanao_tsuyuri.jpg",
+        },
+        {
+          id: 11,
+          name: "Muichiro Tokito",
+          role: "Mist Hashira",
+          breathing: "Mist Breathing",
+          about:
+            "The Mist Hashira and descendant of the first Breathing user. He initially has memory issues but regains them during battles.",
+          skills: [
+            "First Form: Low Clouds, Distant Haze",
+            "Second Form: Eight-Layered Mist",
+            "Third Form: Scattering Mist Splash",
+            "Seventh Form: Obscuring Clouds",
+          ],
+          status: "Deceased",
+          category: "hashira",
+          image: "muichiro_tokito.jpg",
+        },
+        {
+          id: 12,
+          name: "Mitsuri Kanroji",
+          role: "Love Hashira",
+          breathing: "Love Breathing",
+          about:
+            "The Love Hashira with superhuman muscle density. She is emotional, kind, and has a unique fighting style with a whip-like sword.",
+          skills: [
+            "First Form: Shivers of First Love",
+            "Second Form: Love Pangs",
+            "Fifth Form: Swaying Love, Wildclaw",
+            "Sixth Form: Cat-Legged Winds of Love",
+          ],
+          status: "Alive",
+          category: "hashira",
+          image: "mitsuri_kanroji.jpg",
+        },
+        {
+          id: 13,
+          name: "Obanai Iguro",
+          role: "Serpent Hashira",
+          breathing: "Serpent Breathing",
+          about:
+            "The Serpent Hashira who fights alongside his snake, Kaburamaru. He has a complex personality but is deeply loyal to his comrades.",
+          skills: [
+            "First Form: Winding Serpent Slash",
+            "Second Form: Venom Fangs of the Narrow Head",
+            "Third Form: Coil Choke",
+            "Fifth Form: Slithering Serpent",
+          ],
+          status: "Deceased",
+          category: "hashira",
+          image: "obanai_iguro.jpg",
+        },
+        {
+          id: 14,
+          name: "Sanemi Shinazugawa",
+          role: "Wind Hashira",
+          breathing: "Wind Breathing",
+          about:
+            "The Wind Hashira with a volatile personality. He has a rare Marechi blood type that is toxic to demons.",
+          skills: [
+            "First Form: Dust Whirlwind Cutter",
+            "Second Form: Claws-Purifying Wind",
+            "Fourth Form: Rising Dust Storm",
+            "Ninth Form: Idaten Typhoon",
+          ],
+          status: "Alive",
+          category: "hashira",
+          image: "sanemi_shinazugawa.jpg",
+        },
+        {
+          id: 15,
+          name: "Gyomei Himejima",
+          role: "Stone Hashira",
+          breathing: "Stone Breathing",
+          about:
+            "The Stone Hashira and strongest of all Hashira. He is blind but has enhanced other senses and uses a flail and axe weapon.",
+          skills: [
+            "First Form: Serpentinite Bipolar",
+            "Second Form: Upper Smash",
+            "Third Form: Stone Skin",
+            "Fourth Form: Volcanic Rock",
+            "Fifth Form: Arcs of Justice",
+          ],
+          status: "Deceased",
+          category: "hashira",
+          image: "gyomei_himejima.jpg",
+        },
+      ];
+
+      // DOM elements
+      const characterGrid = document.getElementById("characterGrid");
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      const mobileFilterButtons =
+        document.querySelectorAll(".mobile-filter-btn");
+      const mobileFilterToggle = document.getElementById("mobileFilterToggle");
+      const mobileFilterMenu = document.getElementById("mobileFilterMenu");
+      const filterIcon = document.getElementById("filterIcon");
+      const modal = document.getElementById("characterModal");
+      const closeModal = document.getElementById("closeModal");
+
+      // Modal elements
+      const modalName = document.getElementById("modalName");
+      const modalRole = document.getElementById("modalRole");
+      const modalAbout = document.getElementById("modalAbout");
+      const modalBreathing = document.getElementById("modalBreathing");
+      const modalSkills = document.getElementById("modalSkills");
+      const modalStatus = document.getElementById("modalStatus");
+      const modalImg = document.getElementById("modalImg");
+
+      // Toggle mobile filter menu
+      mobileFilterToggle.addEventListener("click", () => {
+        const isVisible = mobileFilterMenu.style.display === "flex";
+        if (isVisible) {
+          mobileFilterMenu.style.display = "none";
+          filterIcon.classList.remove("fa-chevron-up");
+          filterIcon.classList.add("fa-chevron-down");
+        } else {
+          mobileFilterMenu.style.display = "flex";
+          filterIcon.classList.remove("fa-chevron-down");
+          filterIcon.classList.add("fa-chevron-up");
+        }
+      });
+
+      // Function to generate character cards with animations
+      function generateCharacterCards(filter = "all") {
+        characterGrid.innerHTML = "";
+
+        const filteredCharacters =
+          filter === "all"
+            ? characters
+            : characters.filter((char) => char.category === filter);
+
+        filteredCharacters.forEach((character, index) => {
+          const card = document.createElement("div");
+          card.className = "character-card";
+          card.setAttribute("data-category", character.category);
+          card.setAttribute("data-id", character.id);
+
+          // Create status indicator
+          const statusClass = character.status.toLowerCase().includes("alive")
+            ? "alive"
+            : "deceased";
+
+          card.innerHTML = `
+                    <div class="character-img">
+                        <img src="images/${character.image}" alt="${
+            character.name
+          }" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'; this.alt='${
+            character.name
+          } placeholder';">
+                    </div>
+                    <div class="character-info">
+                        <h3>${character.name}</h3>
+                        <div class="role">
+                            <span class="status ${statusClass}"></span>
+                            ${character.role}
+                        </div>
+                        <p class="breathing-style">
+                            <i class="fas fa-wind"></i> ${
+                              character.breathing.split(",")[0]
+                            }
+                        </p>
+                    </div>
+                `;
+
+          card.addEventListener("click", () => openModal(character));
+          characterGrid.appendChild(card);
+
+          // Add animation class with staggered delay
+          setTimeout(() => {
+            // Alternate between left and right entrance for visual interest
+            if (index % 2 === 0) {
+              card.classList.add("animate-in");
+            } else {
+              card.classList.add("animate-in-right");
+            }
+
+            // Set animation delay based on index for staggered effect
+            card.style.animationDelay = `${index * 0.1}s`;
+          }, 100);
+        });
+      }
+
+      // Function to open modal with character details
+      function openModal(character) {
+        // Set modal content
+        modalName.textContent = character.name;
+        modalRole.innerHTML = `<span class="status ${
+          character.status.toLowerCase().includes("alive")
+            ? "alive"
+            : "deceased"
+        }"></span> ${character.role}`;
+        modalAbout.textContent = character.about;
+        modalBreathing.textContent = character.breathing;
+        modalStatus.textContent = character.status;
+
+        // Clear and populate skills
+        modalSkills.innerHTML = "";
+        character.skills.forEach((skill, index) => {
+          const skillTag = document.createElement("div");
+          skillTag.className = "skill-tag";
+          skillTag.textContent = skill;
+          skillTag.style.animationDelay = `${0.5 + index * 0.05}s`;
+          modalSkills.appendChild(skillTag);
+        });
+
+        // Set modal image
+        modalImg.innerHTML = `<img src="images/${character.image}" alt="${character.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w-800&q=80'; this.alt='${character.name} placeholder';">`;
+
+        // Show modal
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+
+        // Close mobile filter menu if open
+        mobileFilterMenu.style.display = "none";
+        filterIcon.classList.remove("fa-chevron-up");
+        filterIcon.classList.add("fa-chevron-down");
+      }
+
+      // Function to handle filter button clicks
+      function handleFilterClick(button, filterValue) {
+        // Remove active class from all desktop buttons
+        filterButtons.forEach((btn) => btn.classList.remove("active"));
+        // Remove active class from all mobile buttons
+        mobileFilterButtons.forEach((btn) => btn.classList.remove("active"));
+
+        // Add active class to clicked button
+        button.classList.add("active");
+
+        // Filter characters
+        generateCharacterCards(filterValue);
+
+        // Close mobile menu after selection
+        if (window.innerWidth <= 768) {
+          mobileFilterMenu.style.display = "none";
+          filterIcon.classList.remove("fa-chevron-up");
+          filterIcon.classList.add("fa-chevron-down");
+        }
+      }
+
+      // Event listeners for desktop filter buttons
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          handleFilterClick(button, button.getAttribute("data-filter"));
+        });
+      });
+
+      // Event listeners for mobile filter buttons
+      mobileFilterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          handleFilterClick(button, button.getAttribute("data-filter"));
+        });
+      });
+
+      // Close modal when clicking the X - FIXED
+      closeModal.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevent event bubbling
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+      });
+
+      // Close modal when clicking outside
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      // Also close modal with Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.style.display === "block") {
+          modal.style.display = "none";
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      // Initialize the page
+      document.addEventListener("DOMContentLoaded", () => {
+        generateCharacterCards();
+
+        // Add 3D effect to cards on mouse move
+        const addCardEffects = () => {
+          document.querySelectorAll(".character-card").forEach((card) => {
+            card.addEventListener("mousemove", (e) => {
+              const cardRect = card.getBoundingClientRect();
+              const cardCenterX = cardRect.left + cardRect.width / 2;
+              const cardCenterY = cardRect.top + cardRect.height / 2;
+
+              const angleX = (e.clientY - cardCenterY) * 0.01;
+              const angleY = (cardCenterX - e.clientX) * 0.01;
+
+              card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-10px)`;
+            });
+
+            card.addEventListener("mouseleave", () => {
+              card.style.transform =
+                "perspective(1000px) rotateX(0) rotateY(0) translateY(0)";
+            });
+          });
+        };
+
+        addCardEffects();
+
+        // Re-add card effects when filtering
+        const originalGenerateCards = generateCharacterCards;
+        generateCharacterCards = function (filter) {
+          originalGenerateCards(filter);
+          setTimeout(addCardEffects, 200); // Wait for animations to complete
+        };
+      });
+    </script>
+  </body>
+</html>
